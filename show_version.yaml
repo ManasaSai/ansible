@@ -1,0 +1,16 @@
+#author: @ManasaViswandhuni
+---
+- hosts: eos_demo_group
+  gather_facts: no
+  connection: local
+  tasks:
+    - name: veos show version
+      eos_command:
+        host: "{{inventory_hostname}}"
+        provider: "{{ provider }}"
+        commands: show startup-config
+      register: show
+    - name: saving output
+      copy:
+        content: "{{show.stdout[0]}}"
+        dest: "./backups/show_{{ inventory_hostname }}.txt"

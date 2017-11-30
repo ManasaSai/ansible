@@ -1,0 +1,8 @@
+---
+#path:/home/manasa/eos-ansible-quick-start
+- hosts: junos_group
+  gather_facts: no
+  connection: local
+
+  roles:
+    - isis_test

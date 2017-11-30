@@ -1,0 +1,11 @@
+#path:/home/manasa/eos-ansible-quick-start/roles/isis_test/tasks
+  - name: isis library test
+    junos_isis_test:
+        host: "{{ inventory_hostname }}"
+        provider: "{{ provider }}"
+        commands: show isis interface
+        src: srx.cfg
+	lines: delete interfaces ge-0/0/1.0 disable
+    register: result
+  - debug:
+        var: result

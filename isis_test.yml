@@ -1,0 +1,16 @@
+---
+
+- hosts: eos_isis_group
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: isis library test
+      eos_isis_test:
+        host: "{{ inventory_hostname }}"
+        provider: "{{ provider }}"
+        command: show isis summary
+        isis_interface: 1
+      register: result
+    - debug:
+        var: result

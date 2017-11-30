@@ -1,0 +1,21 @@
+#author: @ManasaViswandhuni
+#This script file finds the interface that are down in arista eos device and do the interfaces 
+
+---
+- hosts: eos_demo_group
+  gather_facts: no
+  connection: local
+
+  roles:
+    - show_interface
+    - admin_down
+    - port_down
+    - check_interfaces
+    - protocol_down
+    
+
+
+
+
+
+

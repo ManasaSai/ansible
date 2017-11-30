@@ -1,0 +1,3 @@
+Interface              IP Address         Status     Protocol         MTU
+Ethernet1              192.168.1.59/24    up         up              1500
+Management1            10.10.10.1/24      admin down down            1500

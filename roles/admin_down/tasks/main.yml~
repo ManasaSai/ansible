@@ -1,0 +1,35 @@
+
+---
+
+    - name: Login is successful and checking if any interface is adminstratively down
+      debug:
+        msg : "  interface {{ item.split(' ')[0] }} port is adminstratively down ,  Bring the port up"
+      with_items: "{{ show.stdout_lines}}"
+      when : item | search('admin down')
+    - name: Enabling interfaces if any interfaces are adminstratively down
+      eos_config:
+        host: "{{ inventory_hostname }}"
+        provider: "{{ provider }}"
+        lines: 
+          - "interface {{ item.split(' ')[0] }} "
+          - "no shut"
+          - "do wr"
+      with_items: "{{ show.stdout_lines}}"
+      when : item | search('admin down')
+    - pause: 
+        seconds: 5
+    - name: Checking the interface status
+      eos_command:
+        host: "{{ inventory_hostname }}"
+        provider: "{{ provider }}"
+        commands: show ip interface brief
+      register: show
+    - name: Interface status after execution
+      debug:
+        msg: "{{ show.stdout_lines }}"
+
+    - name: saving output in ./backups folder 
+      copy:
+        content: "{{show.stdout[0]}}"
+        dest: "./backups/show_int_status_{{ inventory_hostname }}.txt" 
+

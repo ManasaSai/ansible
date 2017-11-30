@@ -1,0 +1,9 @@
+---
+#/home/manasa/eos-ansible-quick-start/roles/check_interface/tasks 
+   - name: Checking the interface status after execution 
+      debug:
+        msg : "  interface {{ item.split(' ')[0] }} port is still down ,  problem might be on the other side of the link.Please check there"
+      with_items: "{{ show.stdout_lines}}"
+      when : item | search('down')
+
+

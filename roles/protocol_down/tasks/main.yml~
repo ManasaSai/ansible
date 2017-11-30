@@ -1,0 +1,8 @@
+---
+    
+ - name: Checking if the status is up and link is down
+   debug:
+     msg : "for the interface {{ item.split(' ')[0] }} status is up and link is down ,either cable is damaged or configuration is wrong "
+   with_items: "{{ show.stdout_lines}}"
+   when : item | search('up [ ]*down')
+

@@ -1,0 +1,17 @@
+---
+#/home/manasa/eos-ansible-quick-start/roles/show_interface/tasks
+  - name: Logging into the remote device and Checking the interface status
+    eos_command:
+        host: "{{ inventory_hostname }}"
+        provider: "{{ provider }}"
+        commands: show ip interface brief
+    register: show
+  - name: Interface status 
+    debug:
+      msg: "{{ show.stdout_lines }}"
+
+  - name: saving output in ./backups folder 
+    copy:
+      content: "{{show.stdout[0]}}"
+      dest: "./backups/show_int_status_{{ inventory_hostname }}.txt" 
+
